@@ -1,0 +1,22 @@
+main:
+irmovq $1,%r12
+
+
+loop: # plussaa pinon alkiot
+popq %rcx
+addq %rcx,%rax
+addq %r12,%r8
+rrmovq %rsp,%r10
+subq %rbp, %r10
+jne loop
+jmp end 
+
+
+
+end:
+addq %r12,%rdx
+subq %r8, %rax
+jg end
+subq %r12,%rdx
+rrmovq %rdx, %rax
+halt  

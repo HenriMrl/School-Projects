@@ -1,0 +1,19 @@
+main:
+
+   popq %rcx
+   rrmovq %rcx, %rdi
+   rrmovq %rcx, %rsi
+
+loop:
+    popq %rcx
+    subq %r10, %rcx
+    je end
+    rrmovq %rcx, %r8
+    subq %rdi, %r8
+    cmovg %rcx, %rdi
+    rrmovq %rcx, %r8
+    subq %rsi, %r8
+    cmovl %rcx, %rsi
+    jmp loop
+end: 
+halt 

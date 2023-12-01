@@ -1,0 +1,10 @@
+main:
+irmovq $1, %rbx
+rrmovq %rsi, %rsp
+   
+loop:
+   addq %rsp,%rax
+   subq %rbx,%rdi
+   jg loop
+   halt
+   

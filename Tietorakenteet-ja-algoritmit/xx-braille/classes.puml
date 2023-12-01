@@ -1,0 +1,42 @@
+@startuml
+package oy.tol.tra {
+    class BrailleSymbol {
+        character: char
+        braille: char
+    }
+    abstract class BrailleTable {
+        +readSymbols(fromFile : String) : void 
+        #{abstract}initializeTable() : void
+        #{abstract}addToTable(character : Character, brailleSymbol : Character) : void
+        #{abstract}lookupBrailleSymbol(forCharacter : Character) : Character
+        #{abstract}lookupCharacter(forBrailleSymbol : Character ) : Character
+    }
+    class SlowBrailleTable {
+    }
+    SlowBrailleTable *--> "0..*" BrailleSymbol
+    BrailleTable <|-- SlowBrailleTable
+    BrailleTable <|-- HashBrailleTable
+    class HashBrailleTable #pink;line:red
+    note bottom of HashBrailleTable 
+       Implement this as a hash table
+    end note
+    class BrailleConverter {
+        +initialize(whichConverter : Converter, brailleSymbolTableFileName : String) : void
+        +convertTextFileToBraille(textFile : String, outputFile : String) : boolean
+    }
+    package input {
+        entity Kalevala.txt <<file>>
+        entity Bulk.txt <<file>>
+    }
+    package output {
+        entity Kalevala-Braille.txt <<file>>
+        entity Bulk-Braille.txt <<file>>
+    }
+    BrailleConverter ..> input : reads
+    BrailleConverter ..> output : writes
+    BrailleConverter ..> BrailleTable : uses
+    SlowBrailleTests ..> BrailleConverter : tests
+    HashCorrectnessTests ..> BrailleConverter : tests
+    AllBrailleTests ..> BrailleConverter : tests
+}
+@enduml

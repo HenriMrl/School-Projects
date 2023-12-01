@@ -1,0 +1,19 @@
+main:
+irmovq 0x400, %r8
+mrmovq (%r8), %rcx
+irmovq $8, %r9
+irmovq $1, %r10
+
+loop:
+    addq %r10,%rax
+    subq %rdx, %rcx
+    je end
+    jmp lisays
+
+lisays:
+    addq %r9,%r8
+    mrmovq (%r8), %rcx
+    jmp loop
+end:
+    subq %r10, %rax
+    halt
